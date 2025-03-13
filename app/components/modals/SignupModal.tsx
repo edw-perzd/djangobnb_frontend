@@ -27,17 +27,17 @@ const SignupModal = () => {
         const response = await apiService.post('/api/auth/register/', JSON.stringify(formData))
 
         if(response.access){
-            handleLogin(response.user_pk, response.access, response.refresh)
+            handleLogin(response.user.pk, response.access, response.refresh)
 
             signupModal.close()
             router.push('/')
             
         }else{
-            const tmtErrors: string[] = Object.values(response).map((error: any) =>{
+            const tmpErrors: string[] = Object.values(response).map((error: any) =>{
                 return error
             })
 
-            setErrors(tmtErrors)
+            setErrors(tmpErrors)
         }
     }
     

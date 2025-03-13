@@ -14,9 +14,9 @@ const apiService = {
                 console.log('Response', json)
                 resolve(json)
             })
-            .catch((error) => {
+            .catch((error => {
                 reject(error)
-            })
+            }))
         })
     },
     post: async function(url: string, data: any): Promise<any> {
@@ -36,9 +36,9 @@ const apiService = {
                 console.log('Response', json)
                 resolve(json)
             })
-            .catch((error) => {
+            .catch((error => {
                 reject(error)
-            })
+            }))
         })
     }
 

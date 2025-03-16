@@ -3,6 +3,7 @@ import Image from "next/image"
 
 import apiService from "@/app/services/apiService"
 import { getUserId } from "@/app/lib/actions"
+import Link from "next/link"
 
 const PropertyDetailPage = async ({params}: { params: { id: string } }) => {
     const property = await apiService.get(`/api/properties/${params.id}`)
@@ -26,7 +27,10 @@ const PropertyDetailPage = async ({params}: { params: { id: string } }) => {
                         {property.guests} guest - {property.bedrooms} bedrooms - {property.bathrooms} badroom
                     </span>
                     <hr />
-                    <div className="py-6 flex items-center space-x-4">
+                    <Link
+                        href={`/landlords/${property.landlord.id}`}
+                        className="py-6 flex items-center space-x-4"
+                    >
                         {property.landlord.avatar_url && (
                             <Image 
                                 src={property.landlord.avatar_url}
@@ -37,7 +41,7 @@ const PropertyDetailPage = async ({params}: { params: { id: string } }) => {
                             />
                         )}
                         <p><strong>{property.landlord.name}</strong> is your host</p>
-                    </div>
+                    </Link>
 
                     <hr />
 

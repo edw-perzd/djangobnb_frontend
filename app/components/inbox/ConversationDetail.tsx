@@ -10,12 +10,14 @@ interface ConversationDetailProps {
     userId: string,
     token: string,
     conversation: ConversationType,
+    messages: MessagesType[]
 }
 
 const ConversationDetail: React.FC<ConversationDetailProps> = ({
     conversation,
     token,
-    userId
+    userId,
+    messages
 }) =>{
     const messagesDiv = useRef(null)
     const [newMessage, setNewMessage] = useState('')
@@ -36,7 +38,7 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({
         if(lastJsonMessage && typeof lastJsonMessage === 'object' && 'name' in lastJsonMessage && 'body' in lastJsonMessage){
             const message: MessagesType = {
                 id: '',
-                name: 'Eduardo', //lastJsonMessage.name as string,
+                name: lastJsonMessage.name as string,
                 body: lastJsonMessage.body as string,
                 sent_to: otherUser as UserType,
                 created_by: myUser as UserType,
@@ -80,10 +82,19 @@ const ConversationDetail: React.FC<ConversationDetailProps> = ({
                 ref={messagesDiv}
                 className="max-h-[400px] overflow-auto flex flex-col space-y-4"
             >
+                {messages.map((message, index) =>(
+                    <div
+                        key={index}
+                        className={`w-[80%] py-4 px-6 rounded-xl ${message.name == myUser?.name ? 'ml-[20%] bg-blue-200': 'bg-gray-200'}`}
+                    >
+                        <p className="font-bold text-gray-500">{message.created_by.name}</p>
+                        <p>{message.body}</p>
+                    </div>
+                ))}
                 {realTimeMessages.map((message, index) =>(
                     <div
                         key={index}
-                        className={`w-[80%] py-4 px-6 rounded-xl ${message.name === myUser?.name ? 'ml-[20%] bg-blue-200': 'bg-gray-200'}`}
+                        className={`w-[80%] py-4 px-6 rounded-xl ${message.name == myUser?.name ? 'ml-[20%] bg-blue-200': 'bg-gray-200'}`}
                     >
                         <p className="font-bold text-gray-500">{message.name}</p>
                         <p>{message.body}</p>

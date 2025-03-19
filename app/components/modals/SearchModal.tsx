@@ -1,7 +1,7 @@
 'use client'
 
 import Modal from "./Modal"
-import useSearchModal from "@/app/hooks/useSearchModal"
+import useSearchModal, { SearchQuery } from "@/app/hooks/useSearchModal"
 import SelectCountry, { SelectCountryValue } from "../forms/SelectCountry"
 import { useState } from "react"
 import CustomButton from "../forms/CustomButton"
@@ -24,6 +24,16 @@ const SearchModal = () => {
     const [dateRange, setDateRange] = useState<Range>(initialDateRange)
 
     const closeAndSearch = () => {
+        const newSearchQuery: SearchQuery = {
+            country: country?.label,
+            checkIn: dateRange.startDate,
+            checkOut: dateRange.endDate,
+            guests: parseInt(numGuests),
+            bedrooms: parseInt(numBedrooms),
+            bathrooms: parseInt(numBathrooms),
+            category: ''
+        }
+        searchModal.setQuery(newSearchQuery)
         searchModal.close()
     }
 
